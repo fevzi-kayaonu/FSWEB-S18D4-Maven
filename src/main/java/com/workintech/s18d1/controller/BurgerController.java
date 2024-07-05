@@ -1,6 +1,6 @@
 package com.workintech.s18d1.controller;
 
-import com.workintech.s18d1.dao.BurgerDaoImpl;
+import com.workintech.s18d1.dao.BurgerDao;
 import com.workintech.s18d1.entity.BreadType;
 import com.workintech.s18d1.entity.Burger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,14 +8,15 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin("*")
 @RestController
-@RequestMapping("/workintech/burgers")
+@RequestMapping("/burger")
 public class BurgerController {
 
-    BurgerDaoImpl burgerDaoImpl;
+    BurgerDao burgerDaoImpl;
 
     @Autowired
-    BurgerController(BurgerDaoImpl burgerDaoImpl){
+    BurgerController(BurgerDao burgerDaoImpl){
         this.burgerDaoImpl=burgerDaoImpl;
     }
     @GetMapping
@@ -33,9 +34,8 @@ public class BurgerController {
         return burgerDaoImpl.save(burger);
     }
 
-    @PutMapping("/{id}")
-    Burger update(@PathVariable long id){
-        Burger burger = burgerDaoImpl.findById(id);;
+    @PutMapping
+    Burger update(@RequestBody Burger burger){
         return burgerDaoImpl.update(burger);
     }
 
